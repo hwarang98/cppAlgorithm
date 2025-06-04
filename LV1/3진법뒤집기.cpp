@@ -18,17 +18,9 @@ string toBase3(int n) {
     return result;
 }
 
-// 3진법 문자열 → 10진수
-int fromBase3(const string& s) {
-    int result = 0;
-    for (char c : s) {
-        result = result * 3 + (c - '0');
-    }
-    return result;
-}
 
 int solution(int n) {
-    string base3 = toBase3(n);
+    string base3 = toBase3(n); // 202
     reverse(base3.begin(), base3.end());
-    return fromBase3(base3);
+    return stoi(base3, nullptr, 3);
 }
