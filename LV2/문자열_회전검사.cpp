@@ -4,32 +4,53 @@
 
 using namespace std;
 
-bool isValid(const string& s) {
-    stack<char> st;
-    for (char c : s) {
-        if (c == '(' || c == '[' || c == '{') {
-            st.push(c);
-        } else {
-            if (st.empty()) return false;
-            char top = st.top();
-            if ((c == ')' && top != '(') ||
-                (c == ']' && top != '[') ||
-                (c == '}' && top != '{')) {
+bool IsValid(const string& s)
+{
+    // ( [ { 가 나오면 stack에 push
+    // ) ] } 가 나오면 스택에서 짝이맞는지 판별
+    stack<char> stringStack;
+
+    for (const char& stack : s)
+    {
+        if (stack == '(' || stack == '[' || stack == '{')
+        {
+            stringStack.push(stack);
+        }
+        else
+        {
+            if (stringStack.empty())
+            {
                 return false;
             }
-            st.pop();
+            
+            char topString = stringStack.top();
+            
+            if (
+                (stack == ')' && topString != '(') ||
+                (stack == ']' && topString != '[') ||
+                (stack == '}' && topString != '{'))
+                {
+                    return false;
+                }
+            stringStack.pop();
         }
     }
-    return st.empty();
+
+    return stringStack.empty();
 }
 
 int solution(string s) {
-    int n = s.size();
     int answer = 0;
 
-    for (int i = 0; i < n; i++) {
-        if (isValid(s)) answer++;
-        // 문자열 왼쪽 회전
+    int size = s.size();
+
+    for (int i = 0; i < size; ++i)
+    {
+        if (IsValid(s))
+        {
+            answer++;
+        }
+
         s = s.substr(1) + s[0];
     }
     return answer;
