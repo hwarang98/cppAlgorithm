@@ -2,11 +2,9 @@
 #include <vector>
 
 using namespace std;
-
 vector<string> dict;
-vector<char> vowels = {'A', 'E', 'I', 'O', 'U'};
+vector<char> vowel = {'A', 'E', 'I', 'O', 'U'};
 
-// DFS로 모든 가능한 단어 생성
 void dfs(string current)
 {
     if (!current.empty())
@@ -19,19 +17,23 @@ void dfs(string current)
         return;
     }
 
-    for (char c : vowels)
+    for (char c : vowel)
     {
         dfs(current + c);
     }
 }
 
-int solution(string word) {
-    dfs(""); // 사전 전체 생성
+int solution(string word)
+{
+    // 사전 생성
+    dfs("");
     
-    // 사전은 이미 사전순으로 생성됨
-    for (int i = 0; i < dict.size(); i++) {
-        if (dict[i] == word) return i + 1;
+    for (int i = 0; i < dict.size(); i++)
+    {
+        if (dict[i] == word)
+        {
+            return i + 1;
+        }
     }
-    
-    return -1; // 이론상 도달 안함
+    return 1;
 }
