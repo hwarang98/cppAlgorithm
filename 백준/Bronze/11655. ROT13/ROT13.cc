@@ -2,41 +2,22 @@
 
 using namespace std;
 
-string word;
-
-int main(){
+int main() {
+    string word;
     getline(cin, word);
 
-    // 대문자 소문자인경우
-    for (int i = 0; i < word.size(); ++i)
-    {
-        if (word[i] >= 65 && word[i] <= 90)
-        {
-            // 대문자인 경우
-            if (word[i] + 13 > 90)
-            {
-                word[i] = word[i] + 13 - 26;
-            }
-            else
-            {
-                word[i] = word[i] + 13;
-            }
+    for (char& c : word) {
+        if (isupper(c)) {
+            // 대문자인 경우 'A'를 기준으로 13칸 회전
+            c = 'A' + (c - 'A' + 13) % 26;
         }
-
-        if (word[i] >= 97 && word[i] <= 122)
-        {
-            // 소문자인 경우
-            if (word[i] + 13 > 122)
-            {
-                word[i] = word[i] + 13 - 26;
-            }
-            else
-            {
-                word[i] = word[i] + 13;
-            }
+        else if (islower(c)) {
+            // 소문자인 경우 'a'를 기준으로 13칸 회전
+            c = 'a' + (c - 'a' + 13) % 26;
         }
-        cout << word[i];
+        // 알파벳이 아닌 경우는 그대로 둠
+        cout << c;
     }
-    
+
     return 0;
 }
