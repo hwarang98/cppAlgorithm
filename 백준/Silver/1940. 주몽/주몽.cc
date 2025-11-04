@@ -10,7 +10,9 @@ int main() {
 
     vector<int> materialArray(materialTotalCount);
     for (int i = 0; i < materialTotalCount; ++i)
-        cin >> materialArray[i];
+        {
+            cin >> materialArray[i];
+        }
 
     sort(materialArray.begin(), materialArray.end());
 
@@ -37,3 +39,4 @@ int main() {
     cout << result << "\n";
     return 0;
 }
+
