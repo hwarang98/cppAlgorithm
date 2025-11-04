@@ -19,9 +19,6 @@ int main(){
         cin >> materialNumber;
         materialArray.emplace_back(materialNumber);
     }
-
-    sort(materialArray.begin(), materialArray.end());
-    
     
     for (int i = 0; i < materialArray.size(); i++)
     {
