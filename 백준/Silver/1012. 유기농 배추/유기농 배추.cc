@@ -1,22 +1,20 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 
 using namespace std;
-
-constexpr int max_mn = 54;
-constexpr int max_k = 2504;
 
 int direction_y[4] = {-1, 0, 1, 0};
 int direction_x[4] = {0, 1, 0, -1};
 
-int t, m, n, k, ny, nx, ret, x, y;
-int visited[max_mn][max_mn];
-int MAP[max_mn][max_mn];
+int test_case;
+int m, n, k, ny, nx, y, x, result;
+int visited[52][52];
+int MAP[52][52];
 
 void DFS(const int y, const int x)
 {
     visited[y][x] = 1;
 
-    for (int i = 0; i < 4; i++)
+    for (int i = 0; i < 4; ++i)
     {
         ny = y + direction_y[i];
         nx = x + direction_x[i];
@@ -28,38 +26,44 @@ void DFS(const int y, const int x)
 
 int main()
 {
-    cin.tie(nullptr);
-    cout.tie(nullptr);
+    cin.tie(NULL);
+    cout.tie(NULL);
 
-    cin >> t;
-    while (t--)
+    cin >> test_case;
+
+    while (test_case--)
     {
-        fill(&MAP[0][0], &MAP[0][0] + max_mn * max_mn, 0);
-        fill(&visited[0][0], &visited[0][0] + max_mn * max_mn, 0);
-        ret = 0;
+        // 새로운 testcase마다 초기화
+        fill(&visited[0][0], &visited[0][0] + 52 * 52, 0);
+        fill(&MAP[0][0], &MAP[0][0] + 52 * 52, 0);
+        result = 0;
+
         cin >> m >> n >> k;
 
-        for (int i = 0; i < k; i++)
+        // MAP 생성
+        for (int i = 0; i < k; ++i)
         {
-            // m = 가로길이, n = 세로길이, k = 배추가 심어져있는 위치
             cin >> x >> y;
             MAP[y][x] = 1;
         }
 
-        for (int i = 0; i < n; i++)
+        for (int i = 0; i < n; ++i)
         {
-            for (int j = 0; j < m; j++)
+            for (int j = 0; j < m; ++j)
             {
+                // MAP[i][j] == 1 탐색할수있는 칸인가?, !visited[i][j] = 아직 방문한 적 없는가? 
                 if (MAP[i][j] == 1 && !visited[i][j])
                 {
                     DFS(i, j);
-                    ret++;
+                    result++;
                 }
             }
         }
 
-        cout << ret << "\n";
+        cout << result << "\n";
     }
 
     return 0;
 }
+
+
