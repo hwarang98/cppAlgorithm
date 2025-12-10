@@ -2,13 +2,13 @@
 
 using namespace std;
 
-const int direction_y[4] = {-1, 0, 1, 0};
-const int direction_x[4] = {0, 1, 0, -1};
+int direction_y[4] = {-1, 0, 1, 0};
+int direction_x[4] = {0, 1, 0, -1};
 
 int n, ny, nx, y, x, result = 1;
 
-int visited[104][104];
-int MAP[104][104];
+int visited[101][101];
+int MAP[101][101];
 
 void DFS(const int y, const int x, const int depth)
 {
@@ -16,7 +16,7 @@ void DFS(const int y, const int x, const int depth)
 
     for (int i = 0; i < 4; ++i)
     {
-        ny = y + direction_y [i];
+        ny = y + direction_y[i];
         nx = x + direction_x[i];
 
         if (ny < 0 || nx < 0 || ny >= n || nx >= n) continue;
@@ -40,25 +40,24 @@ int main()
         }
     }
 
-    for (int d = 1; d <= 104; ++d)
+    for (int depth = 1; depth < 101; depth++)
     {
-        fill(&visited[0][0], &visited[0][0] + 104 * 104, 0);
+        fill(&visited[0][0], &visited[0][0] + 101 * 101, 0);
         int count = 0;
-
         for (int i = 0; i < n; ++i)
         {
             for (int j = 0; j < n; ++j)
             {
-                if (MAP[i][j] > d && !visited[i][j])
+                if (MAP[i][j] > depth && !visited[i][j])
                 {
-                    DFS(i, j, d);
+                    DFS(i, j, depth);
                     count++;
                 }
             }
         }
         result = max(result, count);
     }
-    cout << result << '\n';
 
+    cout << result << '\n';
     return 0;
 }
