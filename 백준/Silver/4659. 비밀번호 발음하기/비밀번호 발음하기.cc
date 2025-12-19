@@ -4,8 +4,7 @@ using namespace std;
 
 string word;
 
-// 모음 판독기
-bool isVowel(char c)
+bool isVowels(char c)
 {
 	return string("aeiou").find(c) != string::npos;
 }
@@ -14,48 +13,50 @@ int main() {
 	ios_base::sync_with_stdio(false);
 	cin.tie(NULL);
 	cout.tie(NULL);
-	
-	// 입력받은 문자열을 하나씩 반복
-	// 모음 count >= 3, 자음 cnt >= 3 이면 false;
+
 	while (true)
 	{
 		cin >> word;
+		
 		if (word == "end") break;
 		
-		int vowelCount = 0;      // 모음 등장 횟수
-		int consonantsCount = 0; // 자음 등장 횟수
-		int sameWordCount = 0;   // 동일한 글자 등장 횟수
-		bool flag = false;       // true면 not acceptable
-		bool hasVowel = false;   // 모음 포함 여부 (필요해서 추가)
+		int vowelsCount = 0; // 모음 등장횟수
+		int consonantsCount = 0; // 자음 등장횟수
+		int sameWordCount = 0; // 같은 문자 등장 횟수
+		bool flag = false; 
+		bool includeVowel = false; // 모음 포함 flag
 		
-		for (size_t i = 0; i < word.size(); i++)
+		for (size_t i = 0; i < word.length(); i++)
 		{
-			char c = word[i];
+			const char c = word[i];
 			
-			// 현재 글자가 모음이면
-			if (isVowel(c))
+			// 현재 c 가 자음 이라면
+			if (isVowels(c))
 			{
-				vowelCount++;        // 모음 등장 횟수 추가
-				consonantsCount = 0; // 자음 등장횟수 초기화
-				hasVowel = true;     // 모음 포함 여부 true
+				vowelsCount++;
+				consonantsCount = 0;
+				includeVowel = true;
 			}
+			// 현재 c 가 모음 이라면
 			else
 			{
 				consonantsCount++;
-				vowelCount = 0;
+				vowelsCount = 0;
 			}
 			
-			if (vowelCount >= 3 || consonantsCount >= 3)
+			// 모음 이나 자음이 3개 이상 이면 flag = true
+			if (vowelsCount >= 3 || consonantsCount >= 3)
 			{
 				flag = true;
 				break;
 			}
 			
-			// 같은 글자인지 체크
+			// 현재 글자와 이전 글자가 동일하다면
 			if (i > 0 && word[i] == word[i - 1])
 			{
 				sameWordCount++;
 				
+				// ee 또는 oo 는 예외처리
 				if (c != 'e' && c != 'o')
 				{
 					flag = true;
@@ -66,14 +67,14 @@ int main() {
 			{
 				sameWordCount = 0;
 			}
+			
 		}
 		
-		// 모음이 최소 1개가 포함되어있는지
-		if (!hasVowel) flag = true;
+		// 모음이 최소 1개를 포함한다면
+		if (!includeVowel) flag = true;
 		
 		if (flag) cout << "<" << word << ">" << " is not acceptable." << "\n";
 		else cout << "<" << word << ">" << " is acceptable." << "\n";
 	}
-	
 	return 0;
 }
